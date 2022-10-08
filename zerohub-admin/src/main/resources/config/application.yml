@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+
+
+mybatis:
+  # 搜索指定包别名,在mapper.xml文件中的resultMap的type或者parameterType会用到自定义的POJO
+  type-aliases-package: com.zerozayu.**.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  configuration:
+    # 使全局的映射器启用或禁用缓存
+    cache-enabled: true
+    # 允许JDBC 支持自动生成主键
+    use-generated-keys: true
+    # 配置默认的执行器.SIMPLE就是普通执行器;REUSE执行器会重用预处理语句(prepared statements);BATCH执行器将重用语句并执行批量更新
+    default-executor-type: simple
+    # 指定 MyBatis 所用日志的具体实现
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # 使用驼峰命名法转换字段
+    map-underscore-to-camel-case: true
+
+

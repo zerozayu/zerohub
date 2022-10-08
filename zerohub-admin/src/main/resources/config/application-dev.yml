@@ -1,0 +1,37 @@
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8081
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 100
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 200
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 10
+
+spring:
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  # 数据库
+  datasource:
+    url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+elasticsearch:
+  host: localhost
+  port: 9200
+  scheme: https
+  username: elastic
+  password: zhangyu
+  caCertificatePath: /Users/zhangyu/IdeaProjects/zerohub/zerohub/certs/ca/ca.crt
+
+

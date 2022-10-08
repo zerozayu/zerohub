@@ -1,0 +1,2 @@
+A provider fr.pilato.elasticsearch.crawler.fs.rest.UploadApi registered in SERVER runtime does not implement any provider interfaces applicable in the SERVER runtime. 
+Due to constraint configuration problems the provider fr.pilato.elasticsearch.crawler.fs.rest.UploadApi will be ignored.
