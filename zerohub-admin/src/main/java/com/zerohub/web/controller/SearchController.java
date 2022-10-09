@@ -5,6 +5,7 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.zerohub.web.domain.AjaxResult;
 import com.zerohub.web.domain.IndexSource;
+import com.zerohub.web.utils.ESQueryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -35,7 +37,8 @@ public class SearchController {
                                 .queryString(queryStringQueryBuilder -> queryStringQueryBuilder
                                         .query(searchContent)))
                 , IndexSource.class);
-        return AjaxResult.success(search.hits().hits().stream().map(Hit::source).collect(Collectors.toList()));
+        List<IndexSource> indexSources = ESQueryUtils.parseResponse(search);
+        return AjaxResult.success("123");
     }
 
 
