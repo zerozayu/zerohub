@@ -6,11 +6,60 @@
       "analyzer": {
         "fscrawler_path": {
           "tokenizer": "fscrawler_path"
+        },
+        "ik_max_word_camel": {
+          "tokenizer": "ik_max_word",
+          "char_filter": [
+            "camel_case_filter"
+          ]
+        },
+        "ik_smart_camel": {
+          "tokenizer": "ik_smart",
+          "char_filter": [
+            "camel_case_filter"
+          ]
+        },
+        "synonym_smart": {
+          "type": "custom",
+          "tokenizer": "ik_smart",
+          "filter": [
+            "synonym_filter"
+          ]
+        },
+        "synonym_max_word": {
+          "type": "custom",
+          "tokenizer": "ik_max_word",
+          "filter": [
+            "synonym_filter"
+          ]
+        },
+        "synonym_smart_camel": {
+          "type": "custom",
+          "tokenizer": "ik_smart",
+          "filter": [
+            "synonym_filter"
+          ],
+          "char_filter": [
+            "camel_case_filter"
+          ]
         }
       },
       "tokenizer": {
         "fscrawler_path": {
           "type": "path_hierarchy"
+        }
+      },
+      "char_filter": {
+        "camel_case_filter": {
+          "type": "pattern_replace",
+          "pattern": "(?<=\\p{Lower})(?=\\p{Upper})",
+          "replacement": " "
+        }
+      },
+      "filter": {
+        "synonym_filter": {
+          "type": "synonym",
+          "synonyms_path": "/usr/share/elasticsearch/plugins/analysis-ik/config/analysis/synonym.txt"
         }
       }
     }
@@ -48,7 +97,9 @@
         }
       },
       "content": {
-        "type": "text"
+        "type": "text",
+        "analyzer": "ik_max_word_camel",
+        "search_analyzer": "synonym_smart_camel"
       },
       "file": {
         "properties": {
@@ -56,7 +107,9 @@
             "type": "keyword"
           },
           "filename": {
-            "type": "keyword",
+            "type": "text",
+            "analyzer": "ik_max_word_camel",
+            "search_analyzer": "synonym_smart_camel",
             "store": true
           },
           "extension": {

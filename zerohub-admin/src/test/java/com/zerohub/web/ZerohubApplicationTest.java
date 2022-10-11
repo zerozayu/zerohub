@@ -4,7 +4,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
-import com.zerohub.web.domain.IndexSource;
+import com.zerohub.web.domain.mappings.FileMapping;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,14 +39,14 @@ class ZerohubApplicationTest {
 
     @Test
     void test2() throws IOException {
-        SearchResponse<IndexSource> search = elasticsearchClient
+        SearchResponse<FileMapping> search = elasticsearchClient
                 .search(searchRequestBuilder -> searchRequestBuilder
                                 .index("idx")
                                 .query(queryBuilder -> queryBuilder
                                         .queryString(queryStringQueryBuilder -> queryStringQueryBuilder
                                                 .query("zero")))
-                        , IndexSource.class);
-        List<IndexSource> collect = search.hits().hits().stream().map(Hit::source).collect(Collectors.toList());
+                        , FileMapping.class);
+        List<FileMapping> collect = search.hits().hits().stream().map(Hit::source).collect(Collectors.toList());
         System.out.println(collect);
     }
 

@@ -34,4 +34,7 @@ elasticsearch:
   password: zhangyu
   caCertificatePath: /Users/zhangyu/IdeaProjects/zerohub/zerohub/certs/ca/ca.crt
 
+zerohub:
+  index-name: idx
+
 

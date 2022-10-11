@@ -2,7 +2,6 @@ package com.zerohub.web.utils;
 
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
-import com.zerohub.web.domain.IndexSource;
 
 import java.util.List;
 import java.util.stream.Collectors;

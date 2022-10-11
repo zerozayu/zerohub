@@ -59,6 +59,7 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata:/usr/share/elasticsearch/data
+      - /Users/zhangyu/IdeaProjects/zerohub/zerohub/es-plugins:/usr/share/elasticsearch/plugins
     ports:
       - ${ES_PORT}:9200
     environment:

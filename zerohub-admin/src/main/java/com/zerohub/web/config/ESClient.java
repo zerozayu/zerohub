@@ -83,6 +83,7 @@ public class ESClient {
 
     /**
      * 设置 es 连接所需的证书以及用户名密码
+     * https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/7.17/_encrypted_communication.html
      *
      * @param restClientBuilder   es客户端
      * @param credentialsProvider 用户认证信息

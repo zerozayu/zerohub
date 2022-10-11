@@ -1,21 +1,13 @@
 package com.zerohub.web.controller;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.zerohub.web.domain.AjaxResult;
-import com.zerohub.web.domain.IndexSource;
-import com.zerohub.web.utils.ESQueryUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zerohub.web.service.SearchService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 搜索查询
@@ -26,32 +18,40 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/search")
 public class SearchController {
-    @Autowired
-    private ElasticsearchClient esClient;
 
-    @GetMapping("")
-    public AjaxResult search(@RequestParam(value = "searchContent") String searchContent) throws IOException {
-        SearchResponse<IndexSource> search = esClient.search(searchRequestBuilder -> searchRequestBuilder
-                        .index("idx")
-                        .query(queryBuilder -> queryBuilder
-                                .queryString(queryStringQueryBuilder -> queryStringQueryBuilder
-                                        .query(searchContent)))
-                , IndexSource.class);
-        List<IndexSource> indexSources = ESQueryUtils.parseResponse(search);
-        return AjaxResult.success("123");
+    private final SearchService searchService;
+
+    // todo (zhangyu, 2022-10-10, 17:22:22) : 全局异常处理
+
+    public SearchController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
 
-    @GetMapping("/testsearch")
-    public AjaxResult testsearch() throws IOException {
-        System.out.println("search start");
-        SearchResponse<IndexSource> search = esClient.search(searchRequestBuilder -> searchRequestBuilder
-                        .index("idx")
-                        .query(queryBuilder -> queryBuilder
-                                .queryString(queryStringQueryBuilder -> queryStringQueryBuilder
-                                        .defaultField("content")
-                                        .query("zero")))
-                , IndexSource.class);
-        return AjaxResult.success(search.hits().hits().stream().map(Hit::source).collect(Collectors.toList()));
+    /**
+     * 使用 content 字段执行全文搜索
+     *
+     * @param content 要搜索的内容
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/content")
+    public AjaxResult search(@RequestParam(value = "content") String content) throws IOException {
+
+        return AjaxResult.success(searchService.searchByContent(content));
     }
+
+
+    /**
+     * 使用元字段信息-文件原始名称进行模糊查询
+     *
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/filename")
+    public AjaxResult first(@RequestParam("filename") String filename) throws IOException {
+
+        return AjaxResult.success(searchService.searchByFilename(filename));
+    }
+
 }
