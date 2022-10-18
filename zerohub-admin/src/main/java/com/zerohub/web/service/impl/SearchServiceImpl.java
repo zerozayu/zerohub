@@ -47,18 +47,7 @@ public class SearchServiceImpl implements SearchService {
                         )
                 , FileMapping.class);
         List<FileMapping> fileMappings = ESQueryUtils.parseResponse(search);
-        List<FileInfoDTO> result = fileMappings.stream().map(fileMapping -> {
-                    FileInfoDTO fileInfoDTO = new FileInfoDTO();
-                    fileInfoDTO.setFilename(fileMapping.getFile().getFilename())
-                            .setExtension(fileMapping.getFile().getExtension())
-                            .setUrl(fileMapping.getFile().getUrl())
-                            .setFilesize(fileMapping.getFile().getFilesize())
-                            .setCreated(fileMapping.getFile().getCreated())
-                    ;
-                    return fileInfoDTO;
-                })
-                .collect(Collectors.toList());
-        return result;
+        return getFileInfoDTOS(fileMappings);
     }
 
     /**
@@ -80,8 +69,43 @@ public class SearchServiceImpl implements SearchService {
                                 )
                         )
                 , FileMapping.class);
-        List<FileMapping> fileMappings = ESQueryUtils.parseResponse(search);
-        List<FileInfoDTO> result = fileMappings.stream().map(fileMapping -> {
+        return getFileInfoDTOS(ESQueryUtils.parseResponse(search));
+    }
+
+    @Override
+    public List<FileInfoDTO> searchBySomething(String something) throws IOException {
+        SearchResponse<FileMapping> search = esClient.search(s -> s
+                        .index(indexName)
+                        .query(q -> q
+                                .bool(b -> b
+                                        .must(queryBuilder -> queryBuilder
+                                                .fuzzy(f -> f
+                                                        .field("file.filename")
+                                                        .value(field -> field.stringValue(something))
+                                                        .fuzziness("1")
+                                                )
+                                        )
+                                        .should(queryBuilder -> queryBuilder
+                                                .match(m -> m
+                                                        .field("content")
+                                                        .query(something)
+                                                )
+                                        )
+                                )
+                        )
+                , FileMapping.class);
+
+        return null;
+    }
+
+    /**
+     * 将FileMapping转换为前端所需数据FileInfoDTO
+     *
+     * @param fileMappings
+     * @return
+     */
+    private static List<FileInfoDTO> getFileInfoDTOS(List<FileMapping> fileMappings) {
+        return fileMappings.stream().map(fileMapping -> {
                     FileInfoDTO fileInfoDTO = new FileInfoDTO();
                     fileInfoDTO.setFilename(fileMapping.getFile().getFilename())
                             .setExtension(fileMapping.getFile().getExtension())
@@ -92,6 +116,6 @@ public class SearchServiceImpl implements SearchService {
                     return fileInfoDTO;
                 })
                 .collect(Collectors.toList());
-        return result;
     }
+
 }

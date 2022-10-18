@@ -27,4 +27,6 @@ public interface SearchService {
      * @return
      */
     List<FileInfoDTO> searchByFilename(String filename) throws IOException;
+
+    List<FileInfoDTO> searchBySomething(String something) throws IOException;
 }

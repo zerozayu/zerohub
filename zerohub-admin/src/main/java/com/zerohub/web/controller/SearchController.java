@@ -49,9 +49,19 @@ public class SearchController {
      * @throws IOException
      */
     @GetMapping("/filename")
-    public AjaxResult first(@RequestParam("filename") String filename) throws IOException {
-
+    public AjaxResult filename(@RequestParam("filename") String filename) throws IOException {
         return AjaxResult.success(searchService.searchByFilename(filename));
+    }
+
+    /**
+     * 根据文章或者标题进行模糊查询
+     *
+     * @param something
+     * @return
+     */
+    @GetMapping("/all")
+    public AjaxResult all(@RequestParam("something") String something) throws IOException {
+        return AjaxResult.success(searchService.searchBySomething(something));
     }
 
 }
