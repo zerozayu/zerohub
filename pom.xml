@@ -28,7 +28,6 @@
         <zerohub.version>0.0.1</zerohub.version>
         <zerohub.framework.version>0.0.1</zerohub.framework.version>
         <zerohub.admin.version>0.0.1</zerohub.admin.version>
-        <zerohub.search.version>0.0.1</zerohub.search.version>
     </properties>
 
     <!-- 依赖声明 -->
