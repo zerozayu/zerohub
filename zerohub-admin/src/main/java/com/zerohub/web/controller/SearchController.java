@@ -21,8 +21,6 @@ public class SearchController {
 
     private final SearchService searchService;
 
-    // todo (zhangyu, 2022-10-10, 17:22:22) : 全局异常处理
-
     public SearchController(SearchService searchService) {
         this.searchService = searchService;
     }

@@ -27,7 +27,7 @@ public class SearchServiceImpl implements SearchService {
         this.esClient = esClient;
     }
 
-    @Value("${zerohub.index-name}")
+    @Value("${elasticsearch.zerohub.index-name}")
     private String indexName;
 
     /**
@@ -78,24 +78,24 @@ public class SearchServiceImpl implements SearchService {
                         .index(indexName)
                         .query(q -> q
                                 .bool(b -> b
-                                        .must(queryBuilder -> queryBuilder
-                                                .fuzzy(f -> f
-                                                        .field("file.filename")
-                                                        .value(field -> field.stringValue(something))
-                                                        .fuzziness("1")
-                                                )
-                                        )
                                         .should(queryBuilder -> queryBuilder
                                                 .match(m -> m
                                                         .field("content")
                                                         .query(something)
                                                 )
                                         )
+                                        .should(queryBuilder -> queryBuilder
+                                                .fuzzy(f -> f
+                                                        .field("file.filename")
+                                                        .value(field -> field.stringValue(something))
+                                                        .fuzziness("1")
+                                                )
+                                        )
                                 )
                         )
                 , FileMapping.class);
 
-        return null;
+        return getFileInfoDTOS(ESQueryUtils.parseResponse(search));
     }
 
     /**

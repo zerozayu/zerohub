@@ -1,8 +1,11 @@
 package com.zerohub.web.domain;
 
 
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Data
 public class AjaxResult<T> {
     private static final long serialVersionUID = 1L;
 

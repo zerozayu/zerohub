@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 /**
- * 自定义也无异常
+ * 自定义业务异常
  *
  * @author zhangyu26
  * @date 2022/10/18

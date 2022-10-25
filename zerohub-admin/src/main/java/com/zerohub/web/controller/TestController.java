@@ -21,4 +21,9 @@ public class TestController {
     public String select() {
         return "select";
     }
+
+    @GetMapping("/error")
+    public Integer error() {
+        return 1 / 0;
+    }
 }

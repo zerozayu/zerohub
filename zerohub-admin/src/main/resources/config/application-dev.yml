@@ -33,8 +33,8 @@ elasticsearch:
   username: elastic
   password: zhangyu
   caCertificatePath: /Users/zhangyu/IdeaProjects/zerohub/zerohub/certs/ca/ca.crt
-
-zerohub:
-  index-name: idx
+  zerohub:
+    # 索引名称
+    index-name: idx
 
 
