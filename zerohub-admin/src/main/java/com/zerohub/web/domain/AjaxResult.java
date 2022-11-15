@@ -2,7 +2,6 @@ package com.zerohub.web.domain;
 
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Data
@@ -51,7 +50,7 @@ public class AjaxResult<T> {
      *
      * @return 成功消息
      */
-    public static <T> AjaxResult<T> success() {
+    public static AjaxResult<Void> success() {
         return success(MSG_SUCCESS);
     }
 
@@ -60,7 +59,7 @@ public class AjaxResult<T> {
      *
      * @return 成功消息
      */
-    public static <T> AjaxResult<T> success(String msg) {
+    public static AjaxResult<Void> success(String msg) {
         return success(msg, null);
     }
 
@@ -115,7 +114,7 @@ public class AjaxResult<T> {
      *
      * @return 失败消息
      */
-    public static <T> AjaxResult<T> error() {
+    public static AjaxResult<Void> error() {
         return error(MSG_ERROR);
     }
 
@@ -124,7 +123,7 @@ public class AjaxResult<T> {
      *
      * @return 失败消息
      */
-    public static <T> AjaxResult<T> error(String msg) {
+    public static AjaxResult<Void> error(String msg) {
         return error(null, msg, null);
     }
 
@@ -133,7 +132,7 @@ public class AjaxResult<T> {
      *
      * @return 失败消息
      */
-    public static <T> AjaxResult<T> error(String errorCode, String msg) {
+    public static AjaxResult<Void> error(String errorCode, String msg) {
         return error(errorCode, msg, null);
     }
 
