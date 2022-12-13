@@ -19,6 +19,11 @@ public class FileInfoDTO {
     private String filename;
 
     /**
+     * 文件内容
+     */
+    private String content;
+
+    /**
      * 原始文件扩展名
      */
     private String extension;

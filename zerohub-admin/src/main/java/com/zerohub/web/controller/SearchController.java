@@ -1,6 +1,7 @@
 package com.zerohub.web.controller;
 
 import com.zerohub.web.domain.AjaxResult;
+import com.zerohub.web.domain.FileInfoDTO;
 import com.zerohub.web.service.SearchService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 搜索查询
@@ -16,12 +18,10 @@ import java.io.IOException;
  * @date 2022/9/29 15:31
  */
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/backend-api/search")
 public class SearchController {
 
     private final SearchService searchService;
-
-    // todo (zhangyu, 2022-10-10, 17:22:22) : 全局异常处理
 
     public SearchController(SearchService searchService) {
         this.searchService = searchService;
@@ -36,7 +36,7 @@ public class SearchController {
      * @throws IOException
      */
     @GetMapping("/content")
-    public AjaxResult search(@RequestParam(value = "content") String content) throws IOException {
+    public AjaxResult<List<FileInfoDTO>> search(@RequestParam(value = "content") String content) throws IOException {
 
         return AjaxResult.success(searchService.searchByContent(content));
     }
@@ -49,19 +49,19 @@ public class SearchController {
      * @throws IOException
      */
     @GetMapping("/filename")
-    public AjaxResult filename(@RequestParam("filename") String filename) throws IOException {
+    public AjaxResult<List<FileInfoDTO>> filename(@RequestParam(value = "filename", required = false, defaultValue = "") String filename) throws IOException {
         return AjaxResult.success(searchService.searchByFilename(filename));
     }
 
     /**
      * 根据文章或者标题进行模糊查询
      *
-     * @param something
+     * @param params
      * @return
      */
-    @GetMapping("/all")
-    public AjaxResult all(@RequestParam("something") String something) throws IOException {
-        return AjaxResult.success(searchService.searchBySomething(something));
+    @GetMapping
+    public AjaxResult<List<FileInfoDTO>> all(@RequestParam("params") String params) throws IOException {
+        return AjaxResult.success(searchService.searchAll(params));
     }
 
 }
