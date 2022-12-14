@@ -34,3 +34,4 @@ build/
 
 ### zerohub
 /zerohub/data/
+.DS_Store
