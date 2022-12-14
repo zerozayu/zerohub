@@ -3,7 +3,7 @@ name: "idx"
 fs:
   # url: "/tmp/es"
   # 更新时间
-  update_rate: "1m"
+  update_rate: "10m"
   indexed_chars: 100%
   lang_detect: true
   continue_on_error: true

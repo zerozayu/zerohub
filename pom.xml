@@ -24,6 +24,7 @@
         <druid.version>1.2.12</druid.version>
         <elastic.version>7.17.5</elastic.version>
         <jakarta.json-api.version>2.1.1</jakarta.json-api.version>
+        <spring.boot.redis.version>2.7.3</spring.boot.redis.version>
         <!-- zerohub -->
         <zerohub.framework.version>0.0.1</zerohub.framework.version>
         <zerohub.admin.version>0.0.1</zerohub.admin.version>

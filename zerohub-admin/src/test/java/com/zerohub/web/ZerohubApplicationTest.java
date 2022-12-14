@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,5 +67,25 @@ class ZerohubApplicationTest {
                 )
         );
         System.out.println(createIndexResponse);
+    }
+
+    @Test
+    public void testSystemClass() throws IOException {
+        String osName = System.getProperty("os.name");
+        System.out.println(osName);
+
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("docker images");
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        List<String> processList = new ArrayList<>();
+
+        String line = "";
+        while ((line = input.readLine()) != null){
+            processList.add(line);
+        }
+
+        input.close();
+        System.out.println("1");
     }
 }

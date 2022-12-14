@@ -16,16 +16,68 @@ server:
       min-spare: 10
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   devtools:
     restart:
       # 热部署开关
       enabled: true
   # 数据库
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+    hikari:
+      # 连接池名
+      pool-name: DataHikariCP
+      # 最小空闲连接数
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 最大连接数，默认10
+      maximum-pool-size: 10
+      # 从连接池返回的连接自动提交
+      auto-commit: true
+      # 连接最大存活时间，0表示永久存活，默认1800000（30分钟）
+      max-lifetime: 1800000
+      # 连接超时时间，默认30000（30秒）
+      connection-timeout: 30000
+      # 测试连接是否可用的查询语句
+      connection-test-query: SELECT 1
 
+  redis:
+    # 超时时间
+    timeout: 10000ms
+    # 服务器地址
+    host: localhost
+    # 服务器端口
+    port: 6379
+    # 数据库
+    database: 1
+    # 密码
+    password: 123456
+    lettuce:
+      pool:
+        # 最大连接数，默认8
+        max-active: 1024
+        # 最大连接阻塞等待时间，默认-1
+        max-wait: 10000ms
+        # 最大空闲连接
+        max-idle: 200
+        # 最小空闲连接
+        min-idle: 5
+
+# 自定义异步线程池
+executor:
+  core-pool-size: 5
+  max-pool-size: 10
+  queue-capacity: 200
+  keep-alive-seconds: 60
+
+# Elastic Search 相关配置
 elasticsearch:
   host: localhost
   port: 9200
@@ -37,4 +89,17 @@ elasticsearch:
     # 索引名称
     index-name: idx
 
+# 上传相关
+upload:
+  file:
+    # 上传文件存放文件路径
+    path: /Users/zhangyu/IdeaProjects/zerohub/zerohub/data
 
+# 视频相关
+video:
+  path: /Users/zhangyu/IdeaProjects/zerohub/zerohub/data/static/video/2.mp4
+  ffmpeg:
+    path:
+      win:
+      linux:
+  fileSuffix: mp4
