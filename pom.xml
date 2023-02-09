@@ -12,6 +12,7 @@
     <description>zerohub</description>
 
     <modules>
+        <module>temp</module>
         <module>zerohub-admin</module>
     </modules>
 
