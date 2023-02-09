@@ -127,7 +127,7 @@ services:
   fscrawler:
     image: dadoonet/fscrawler:${FSCRAWLER_VERSION}
     container_name: fscrawler
-    restart: always
+#    restart: always
     volumes:
       - ${PWD}/documents/:/tmp/es:ro
       - ${PWD}/config:/root/.fscrawler
