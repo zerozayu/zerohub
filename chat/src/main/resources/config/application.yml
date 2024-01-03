@@ -1,0 +1,9 @@
+server:
+  port: 20000
+  servlet:
+    context-path: /zhangyu
+spring:
+  security:
+    user:
+      name: zhangyu
+      password: zhangyu
